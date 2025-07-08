@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="login-form-container">
+    <form method="post" action="/Login/Login">
+        <div class="form-group">
+            <label for="username">Логин</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Введите логин" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Введите пароль" required />
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Войти</button>
+    </form>
+</div>

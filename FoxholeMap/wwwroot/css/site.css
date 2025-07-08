@@ -1,3 +1,6 @@
+@import url('layout.css');
+@import url('auth.css');
+
 html {
   font-size: 14px;
 }
@@ -18,7 +21,13 @@ html {
 }
 
 body {
+  color: white;
   margin-bottom: 60px;
+  background-image: url("/FoxholeBack.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {

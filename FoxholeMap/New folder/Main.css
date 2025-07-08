@@ -1,0 +1,133 @@
+/* Create two equal columns that floats next to each other */
+.page {
+    display: grid;
+    grid-template-areas:
+        'left map right'
+        'bottom bottom bottom'
+}
+
+.map {
+    grid-area: map;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 20%;
+    margin-right: 15%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+}
+
+.BottomPanel {
+    grid-area: bottom;
+    vertical-align: bottom;
+    display: inline-block;
+    width: 100vw;
+    height: 7vh;
+}
+
+.UserPanel {
+    height: 100%;
+    background-color: #0b0b0b;
+    border: 2px solid #646565;
+    border-radius: 5px;
+}
+
+.LeftPanel {
+    grid-area: left;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.InstrumentPanel {
+    display: flex;
+
+    min-height: fit-content;
+    max-height: fit-content;
+
+    min-width: fit-content;
+    max-width: fit-content;
+
+    background-color: #0b0b0b;
+    border: 2px solid #646565;
+    border-radius: 5px;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+}
+
+.InstrumentButton {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-right: 5%;
+    margin-left: 5%;
+
+    flex-direction: column;
+    display: flex;
+
+    width: 80%;
+}
+
+.Bin {
+    content: url("UI_Icons/bin.png");
+    margin-top: 15%;
+    margin-bottom: 15%;
+}
+
+.ZoomIn {
+    content: url("UI_Icons/zoom-in.png");
+}
+
+.ZoomOut {
+    content: url("UI_Icons/zoom-out.png");
+}
+
+.RightPanel {
+    grid-area: right;
+    width: 15vw;
+    min-width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.MessagePanel {
+    height: 60%;
+    width: 60%;
+    min-width: 40%;
+    background-color: #0b0b0b;
+    border: 2px solid #646565;
+    border-radius: 5px;
+}
+
+.hide-scrollbar {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.scrollbar {
+    overflow-y: scroll;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: -50px;
+    bottom: 0;
+}
+
+.scrollbar-inner {
+    width: 400px;
+}
