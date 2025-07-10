@@ -1,5 +1,6 @@
 @import url('layout.css');
 @import url('auth.css');
+@import url('main.css');
 
 html {
   font-size: 14px;

@@ -1,15 +1,19 @@
 ﻿using System.Diagnostics;
+using FoxholeMap.DataBase;
 using FoxholeMap.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoxholeMap.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly AppDbContext _db;
         private readonly ILogger<LoginController> _logger;
 
-        public LoginController(ILogger<LoginController> logger)
+        public LoginController(ILogger<LoginController> logger, AppDbContext db)
         {
+            _db = db;
             _logger = logger;
         }
 
@@ -19,13 +23,24 @@ namespace FoxholeMap.Controllers
         }
         
         [HttpPost]
-        public IActionResult Login(LoginModel model)
+        public async Task<IActionResult> Login(UserModel model)
         {
-            //TODO: Make auth
             try
             {
-                HttpContext.Session.SetString("Username", model.Username);
-                return RedirectToAction("Main", "Main");
+                var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == model.Username);
+                
+                bool passwordValid = 
+                    (user != null) && 
+                    (BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash));
+                
+                if (passwordValid)
+                {
+                    HttpContext.Session.SetString("Username", user.Username);
+                    return RedirectToAction("Main", "Main");
+                }
+                
+                ModelState.AddModelError("", "Неверный логин или пароль");
+                return RedirectToAction("Index", "Login");
             }
             catch (Exception ex)
             {

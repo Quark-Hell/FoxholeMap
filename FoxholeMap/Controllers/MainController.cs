@@ -16,6 +16,12 @@ namespace FoxholeMap.Controllers
         public IActionResult Main()
         {
             var username = HttpContext.Session.GetString("Username");
+            
+            if (string.IsNullOrEmpty(username))
+            {
+                return RedirectToAction("Index", "Login"); // вернёт на форму входа
+            }
+            
             ViewBag.Username = username;
             return View();
         }

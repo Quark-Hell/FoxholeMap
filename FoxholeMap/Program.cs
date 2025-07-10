@@ -1,9 +1,15 @@
+using FoxholeMap.DataBase;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSession();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite("Data Source=DataBase/Users.db"));
 
 var app = builder.Build();
 
