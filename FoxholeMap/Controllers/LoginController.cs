@@ -8,10 +8,10 @@ namespace FoxholeMap.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly AppDbContext _db;
+        private readonly UsersDbContext _db;
         private readonly ILogger<LoginController> _logger;
 
-        public LoginController(ILogger<LoginController> logger, AppDbContext db)
+        public LoginController(ILogger<LoginController> logger, UsersDbContext db)
         {
             _db = db;
             _logger = logger;
@@ -23,7 +23,7 @@ namespace FoxholeMap.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> Login(UserModel model)
+        public async Task<IActionResult> Login(LoginModel model)
         {
             try
             {

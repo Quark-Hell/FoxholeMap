@@ -8,8 +8,11 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSession();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<UsersDbContext>(options =>
     options.UseSqlite("Data Source=DataBase/Users.db"));
+
+builder.Services.AddDbContext<ChatsDbContext>(options =>
+    options.UseSqlite("Data Source=DataBase/Chats.db"));
 
 var app = builder.Build();
 

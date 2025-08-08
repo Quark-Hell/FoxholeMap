@@ -21,9 +21,9 @@ public class MapController : Controller
     }
     
     [HttpPost]
-    public JsonResult GetTiles([FromBody] TileRequest request)
+    public JsonResult GetTiles([FromBody] TileRequestModel request)
     {
-        List<MapTile> mapTiles = new List<MapTile>();
+        List<MapTileModel> mapTiles = new List<MapTileModel>();
 
         for (int x = request.StartX; x < request.EndX; x++)
         {
@@ -41,7 +41,7 @@ public class MapController : Controller
                     tilePath = GeneratePlaceholderTile(x,y);
                 }
 
-                mapTiles.Add(new MapTile
+                mapTiles.Add(new MapTileModel
                 {
                     X = x,
                     Y = y,

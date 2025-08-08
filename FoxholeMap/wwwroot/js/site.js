@@ -138,3 +138,25 @@ document.getElementById("resetView").addEventListener("click", () => {
     })
     .catch(error => console.error("<UNK> <UNK>:", error));
 })
+
+class Chat {
+    constructor() {
+        this.chatID = 1;
+        
+        this.ReadChat();
+    }
+    
+    ReadChat(){
+        fetch('/Chat/ReadChat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chatID: this.chatID, username: "Admin" })
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('messages-container').innerHTML = data.chatHtml;
+            });
+    }
+}
+
+const chat = new Chat();
