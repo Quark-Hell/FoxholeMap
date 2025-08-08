@@ -5,40 +5,58 @@
 }
 
 <body>
-<div class="toolbar">
-    <div class="tool-button" title="Bin">
-        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+    <div class="toolbar non-selectable">
+        <div class="tool-button" title="Bin">
+            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+        </div>
+        <div class="tool-button" title="Квадрат">
+            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+        </div>
+        <div class="tool-button" title="Ромб">
+            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+        </div>
+        <div class="tool-button" title="Линия">
+            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+        </div>
+        <div class="tool-button" title="Вертикальная линия">
+            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+        </div>
+        <div class="tool-button" title="Треугольник">
+            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+        </div>
+        <div class="tool-button" title="Окружность">
+            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+        </div>
     </div>
-    <div class="tool-button" title="Квадрат">
-        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+
+    <div class="map-container">
+        <div class="map-viewport" id="mapViewport">
+            <div class="map-canvas" id="mapCanvas">
+                <!-- Тайлы карты будут генерироваться здесь -->
+            </div>
+        </div>
+        
+        <div class="map-controls non-selectable">
+            <button type="button" class="map-control-button" id="zoomIn" title="Приблизить">+</button>
+            <button type="button" class="map-control-button" id="zoomOut" title="Отдалить">-</button>
+            <button type="button" class="map-control-button" id="resetView" title="Сбросить вид">⌂</button>
+        </div>
+        
+        <div class="debug-info" id="debugInfo">
+            X: 0, Y: 0, Zoom: 0
+        </div>
     </div>
-    <div class="tool-button" title="Ромб">
-        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
-    </div>
-    <div class="tool-button" title="Линия">
-        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
-    </div>
-    <div class="tool-button" title="Вертикальная линия">
-        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
-    </div>
-    <div class="tool-button" title="Треугольник">
-        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
-    </div>
-    <div class="tool-button" title="Окружность">
-        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
-    </div>
-</div>
 
 <div class="chat-window">
     <!-- Заголовок чата -->
     <div class="chat-header">
         <div class="chat-info">
-            <div class="chat-icon">
-                <img src="/MapAssets/UI_Icons/chat.png" alt="Чат">
+            <div class="chat-icon non-selectable">
+                <img src="/MapAssets/UI_Icons/bin.png" alt="Чат">
             </div>
             <div class="chat-title">Общий чат</div>
         </div>
-        <button class="chat-close">×</button>
+        <button class="chat-close non-selectable">×</button>
     </div>
 
     <!-- Область сообщений -->
@@ -47,7 +65,7 @@
             <!-- Сообщение от другого пользователя -->
             <div class="message">
                 <div class="message-avatar">
-                    <img src="/MapAssets/UI_Icons/user.png" alt="Пользователь">
+                    <img src="/MapAssets/UI_Icons/bin.png" alt="Пользователь">
                 </div>
                 <div class="message-content">
                     Привет! Как дела?
@@ -57,7 +75,7 @@
             <!-- Своё сообщение -->
             <div class="message own">
                 <div class="message-avatar">
-                    <img src="/MapAssets/UI_Icons/user.png" alt="Вы">
+                    <img src="/MapAssets/UI_Icons/bin.png" alt="Вы">
                 </div>
                 <div class="message-content">
                     Привет! Всё отлично, спасибо!
@@ -67,7 +85,7 @@
             <!-- Ещё сообщение от другого пользователя -->
             <div class="message">
                 <div class="message-avatar">
-                    <img src="/MapAssets/UI_Icons/user.png" alt="Пользователь">
+                    <img src="/MapAssets/UI_Icons/bin.png" alt="Пользователь">
                 </div>
                 <div class="message-content">
                     Отличная карта! Где ты нашёл эти данные?
@@ -77,7 +95,7 @@
             <!-- Длинное сообщение для демонстрации -->
             <div class="message own">
                 <div class="message-avatar">
-                    <img src="/MapAssets/UI_Icons/user.png" alt="Вы">
+                    <img src="/MapAssets/UI_Icons/bin.png" alt="Вы">
                 </div>
                 <div class="message-content">
                     Это очень длинное сообщение для демонстрации того, как текст переносится внутри контейнера сообщения и как выглядит макет с большим количеством текста.
@@ -87,7 +105,7 @@
             <!-- Добавляем больше сообщений для демонстрации скролла -->
             <div class="message">
                 <div class="message-avatar">
-                    <img src="/MapAssets/UI_Icons/user.png" alt="Пользователь">
+                    <img src="/MapAssets/UI_Icons/bin.png" alt="Пользователь">
                 </div>
                 <div class="message-content">
                     Понятно, спасибо за информацию!
@@ -96,7 +114,7 @@
 
             <div class="message own">
                 <div class="message-avatar">
-                    <img src="/MapAssets/UI_Icons/user.png" alt="Вы">
+                    <img src="/MapAssets/UI_Icons/bin.png" alt="Вы">
                 </div>
                 <div class="message-content">
                     Пожалуйста! Если будут ещё вопросы - спрашивай.
@@ -105,7 +123,7 @@
 
             <div class="message">
                 <div class="message-avatar">
-                    <img src="/MapAssets/UI_Icons/user.png" alt="Пользователь">
+                    <img src="/MapAssets/UI_Icons/bin.png" alt="Пользователь">
                 </div>
                 <div class="message-content">
                     Обязательно!

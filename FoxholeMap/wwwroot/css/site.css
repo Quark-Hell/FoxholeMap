@@ -29,6 +29,10 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
+  padding: 0;
+  background-color: #1a1a1a;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {

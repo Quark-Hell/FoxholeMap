@@ -1,6 +1,7 @@
 ﻿header, .navbar {
     background-color: black;
     color: white;
+    z-index: 1000;
 }
 
 .navbar a {
@@ -22,6 +23,7 @@
 .custom-footer {
     color: white;
     background-color: black;
+    z-index: 500;
 }
 
 .custom-footer a {
