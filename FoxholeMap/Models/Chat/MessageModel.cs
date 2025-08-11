@@ -6,7 +6,7 @@ namespace FoxholeMap.Models;
 public class MessageModel
 {
     [Key]
-    public int MessageID { get; set; } = -1;
+    public int MessageID { get; set; }
     public int ChatID { get; set; } = -1;
     
     [ForeignKey("ChatID")]

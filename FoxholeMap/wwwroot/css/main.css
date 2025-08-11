@@ -271,10 +271,13 @@
     display: flex;
     gap: 10px;
     align-items: center;
+    width: 100%;
+    box-sizing: border-box; 
 }
 
 .chat-input input {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 0; 
     padding: 10px;
     background-color: #000000;
     border: 1px solid #ffffff;
@@ -300,6 +303,7 @@
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
+    flex-shrink: 0; 
 }
 
 .send-button:hover {

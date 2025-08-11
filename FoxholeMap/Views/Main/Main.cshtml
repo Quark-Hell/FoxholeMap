@@ -5,47 +5,47 @@
 }
 
 <body>
-    <div class="toolbar non-selectable">
-        <div class="tool-button" title="Bin">
-            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
-        </div>
-        <div class="tool-button" title="Квадрат">
-            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
-        </div>
-        <div class="tool-button" title="Ромб">
-            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
-        </div>
-        <div class="tool-button" title="Линия">
-            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
-        </div>
-        <div class="tool-button" title="Вертикальная линия">
-            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
-        </div>
-        <div class="tool-button" title="Треугольник">
-            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
-        </div>
-        <div class="tool-button" title="Окружность">
-            <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
-        </div>
+<div class="toolbar non-selectable">
+    <div class="tool-button" title="Bin">
+        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
     </div>
+    <div class="tool-button" title="Квадрат">
+        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+    </div>
+    <div class="tool-button" title="Ромб">
+        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+    </div>
+    <div class="tool-button" title="Линия">
+        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+    </div>
+    <div class="tool-button" title="Вертикальная линия">
+        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+    </div>
+    <div class="tool-button" title="Треугольник">
+        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+    </div>
+    <div class="tool-button" title="Окружность">
+        <img src="/MapAssets/UI_Icons/bin.png" alt="Инструмент 1">
+    </div>
+</div>
 
-    <div class="map-container">
-        <div class="map-viewport" id="mapViewport">
-            <div class="map-canvas" id="mapCanvas">
-                <!-- Тайлы карты будут генерироваться здесь -->
-            </div>
-        </div>
-        
-        <div class="map-controls non-selectable">
-            <button type="button" class="map-control-button" id="zoomIn" title="Приблизить">+</button>
-            <button type="button" class="map-control-button" id="zoomOut" title="Отдалить">-</button>
-            <button type="button" class="map-control-button" id="resetView" title="Сбросить вид">⌂</button>
-        </div>
-        
-        <div class="debug-info" id="debugInfo">
-            X: 0, Y: 0, Zoom: 0
+<div class="map-container">
+    <div class="map-viewport" id="mapViewport">
+        <div class="map-canvas" id="mapCanvas">
+            <!-- Тайлы карты будут генерироваться здесь -->
         </div>
     </div>
+        
+    <div class="map-controls non-selectable">
+        <button type="button" class="map-control-button" id="zoomIn" title="Приблизить">+</button>
+        <button type="button" class="map-control-button" id="zoomOut" title="Отдалить">-</button>
+        <button type="button" class="map-control-button" id="resetView" title="Сбросить вид">⌂</button>
+    </div>
+        
+    <div class="debug-info" id="debugInfo">
+        X: 0, Y: 0, Zoom: 0
+    </div>
+</div>
 
 <div class="chat-window">
     <!-- Заголовок чата -->
@@ -68,8 +68,11 @@
 
     <!-- Поле ввода -->
     <div class="chat-input">
-        <input type="text" placeholder="Введите сообщение...">
-        <button class="send-button">Отправить</button>
+        <input type="text" id = "text-input" placeholder="Введите сообщение...">
+        <button type="button" id = "send-button" class="send-button">Отправить</button>
     </div>
 </div>
 </body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="~/js/Map.js" asp-append-version="true"></script>
