@@ -1,6 +1,8 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using FoxholeMap.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoxholeMap.Controllers;
 
@@ -20,68 +22,36 @@ public class MapController : Controller
         return View();
     }
     
+    public class MapTile
+    {
+        public int row { get; set; }
+        public int col { get; set; }
+        public double zoom { get; set; }
+    }
+
     [HttpPost]
     public JsonResult GetTiles([FromBody] TileRequestModel request)
     {
-        List<MapTileModel> mapTiles = new List<MapTileModel>();
+        var tiles = new List<MapTile>();
 
-        for (int x = request.StartX; x < request.EndX; x++)
+        int count = 1 << (int)request.Zoom;
+
+        for (int row = 0; row < count; row++)
         {
-            for (int y = request.StartY; y < request.EndY; y++)
+            for (int col = 0; col < count; col++)
             {
-                int zoom = Convert.ToInt32(Math.Floor(request.Zoom));
-                
-                string foldedPath = $"{_tilesPath} / {zoom}";
-                string tilePath = $"{zoom}_{x}_{y}.png";
-                
-                string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", foldedPath, tilePath);
-
-                if (!System.IO.File.Exists(fullPath))
+                tiles.Add(new MapTile
                 {
-                    tilePath = GeneratePlaceholderTile(x,y);
-                }
-
-                mapTiles.Add(new MapTileModel
-                {
-                    X = x,
-                    Y = y,
-                    ImagePath = Url.Content($"~/{tilePath}")
+                    row = row,
+                    col = col,
+                    zoom = request.Zoom
                 });
             }
         }
-        
-        return Json(mapTiles);
+
+        return Json(tiles);
     }
 
-
-    [HttpGet]
-    public IActionResult GetTile(int x, int y)
-    {
-        //TODO: Add zoom
-        string tilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", _tilesPath, $"{x}_{y}.png");
-
-        if (System.IO.File.Exists(tilePath))
-        {
-            var fileBytes = System.IO.File.ReadAllBytes(tilePath);
-            return File(fileBytes, "image/png");
-        }
-        
-        return RedirectToAction("GeneratePlaceholder", new { x, y });
-    }
-
-    [HttpGet]
-    public IActionResult GeneratePlaceholder(int x, int y)
-    {
-        string placeholderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", $"{x}_{y}.png");
-
-        if (System.IO.File.Exists(placeholderPath))
-        {
-            var fileBytes = System.IO.File.ReadAllBytes(placeholderPath);
-            return File(fileBytes, "image/png");
-        }
-        
-        return NotFound();
-    }
 
     private string GeneratePlaceholderTile(int x, int y)
     {
@@ -109,38 +79,6 @@ public class MapController : Controller
         
         return Json(new MapViewport());
     }
-
-    [HttpPost]
-    public JsonResult UpscaleMap()
-    {
-        const int maxZoom = 6;
-        const int minZoom = 0;
-        
-        var viewport = HttpContext.Session.GetObject<MapViewport>("_mapViewport") 
-                       ?? new MapViewport() { X = 0, Y = 0, Zoom = 0.0 };
-        
-        viewport.Zoom = Math.Clamp(viewport.Zoom + 1, minZoom, maxZoom);
-        
-        HttpContext.Session.SetObject("_mapViewport", viewport);
-
-        return Json(viewport);
-    }
-
-    [HttpPost]
-    public JsonResult DownscaleMap()
-    {
-        const int maxZoom = 6;
-        const int minZoom = 0;
-
-        var viewport = HttpContext.Session.GetObject<MapViewport>("_mapViewport") 
-                       ?? new MapViewport() { X = 0, Y = 0, Zoom = 0.0 };
-        
-        viewport.Zoom = Math.Clamp(viewport.Zoom - 1, minZoom, maxZoom);
-        
-        HttpContext.Session.SetObject("_mapViewport", viewport);
-
-        return Json(viewport);
-    }
     
     [HttpPost]
     public JsonResult MoveMap([FromBody] MapViewport request)
@@ -150,21 +88,6 @@ public class MapController : Controller
         
         viewport.X = request.X;
         viewport.Y = request.Y;
-        
-        HttpContext.Session.SetObject("_mapViewport", viewport);
-
-        return Json(viewport);
-    }
-    
-    [HttpPost]
-    public JsonResult ResetMap()
-    {
-        var viewport = HttpContext.Session.GetObject<MapViewport>("_mapViewport") 
-                       ?? new MapViewport() { X = 0, Y = 0, Zoom = 1.0 };
-        
-        viewport.X = 0;
-        viewport.Y = 0;
-        viewport.Zoom = 0;
         
         HttpContext.Session.SetObject("_mapViewport", viewport);
 

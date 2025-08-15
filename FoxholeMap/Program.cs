@@ -17,16 +17,13 @@ builder.Services.AddDbContext<UsersDbContext>(options =>
 builder.Services.AddDbContext<ChatsDbContext>(options =>
     options.UseSqlite("Data Source=DataBase/Chats.db"));
 
-// Добавляем Quartz
 builder.Services.AddQuartz(q =>
 {
-    // Регистрируем задание
     q.ScheduleJob<ChatReEncryptionJob>(trigger => trigger
         .WithIdentity("ChatReEncryptionTrigger")
-        .WithCronSchedule("0 * * * * ?")); // каждый час
+        .WithCronSchedule("0 0 * * * ?")); 
 });
 
-// Добавляем Quartz HostedService (фон)
 builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 var app = builder.Build();

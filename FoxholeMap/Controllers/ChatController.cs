@@ -99,13 +99,11 @@ public class ChatReEncryptionJob : IJob
 
 }
 
-
 public class ChatController  : Controller
 {
     private readonly ChatsDbContext _db;
     private readonly ILogger<ChatController> _logger;
-
-    private int _currentChatID = -1;
+    
     private ChatModel _currentChat;
 
     public ChatController(ILogger<ChatController> logger, ChatsDbContext db)
@@ -161,7 +159,6 @@ public class ChatController  : Controller
     [HttpPost]
     public JsonResult ReadChat([FromBody] ChatRequest request)
     {
-        _currentChatID = request.ChatID;
         _currentChat = GetChatByID(request.ChatID);
 
         var messagesList = new List<object>();
