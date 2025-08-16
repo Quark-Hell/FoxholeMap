@@ -25,10 +25,13 @@ class MapButtons {
         const centerX = screenWidth / 2;
         const centerY = screenHeight / 2;
         
+        const tileSize = 256;
+        const shift = 1 << (this.zoom + 7);
+        
         let html = '';
         for (const tile of this.tileList) {
-            const top = tile.row * 256 + mouse.currentY;
-            const left = tile.col * 256 + mouse.currentX;
+            const top = (tile.row * tileSize + mouse.currentY)  + (centerY - shift);
+            const left = (tile.col * tileSize + mouse.currentX) + (centerX - shift);
             
             const isVisible =
                 left + 256 > 0 && left < screenWidth &&
@@ -37,7 +40,7 @@ class MapButtons {
             if (!isVisible) continue;
 
             const url = `/MapAssets/Sat Tiles/${tile.zoom}/${tile.zoom}_${tile.col}_${tile.row}.png`;
-            html += `<img class="map-tile" src="${url}" 
+            html += `<img class="map-tile non-selectable" src="${url}" 
                      style="position:absolute; top:${top}px; left:${left}px; width:256px; height:256px;" />`;
         }
 
@@ -56,7 +59,6 @@ class MapButtons {
         })
             .then(r => r.json())
             .then(data => {
-                console.log("Tile data from server:", data);
                 this.tileList = data;
                 this.renderTiles()
             });
@@ -78,7 +80,7 @@ class MapButtons {
                 this.zoom--;
                 const info = `X: ${mouse.currentX}, Y: ${mouse.currentY}, Zoom: ${this.zoom.toFixed(1)}`;
                 debugInfo.textContent = info;
-
+                
                 this.GetMap();
             }
         });
@@ -116,8 +118,8 @@ class MapButtons {
             mouse.lastMouseX = e.clientX;
             mouse.lastMouseY = e.clientY;
 
-            const normalizedDeltaX = deltaX / mouse.screen.screenWidth * mouse.factor * (this.zoom + 1);
-            const normalizedDeltaY = deltaY / mouse.screen.screenHeight * mouse.factor * (this.zoom + 1);
+            const normalizedDeltaX = deltaX / mouse.screen.screenWidth * mouse.factor ;
+            const normalizedDeltaY = deltaY / mouse.screen.screenHeight * mouse.factor ;
 
             mouse.currentX += normalizedDeltaX;
             mouse.currentY += normalizedDeltaY;
