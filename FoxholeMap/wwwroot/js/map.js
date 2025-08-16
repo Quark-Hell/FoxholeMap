@@ -4,15 +4,17 @@ const debugInfo = document.getElementById("debugInfo");
 
 const mouse = new Mouse();
 
+const mouseFactor = [100,200,300,400,500,500,500]
+
 class MapButtons {
     constructor() {
         this.maxZoom = 6;
         this.minZoom = 0;
-        
+
         this.zoom = 0.0;
 
         this.tileList = [];
-        
+
         this.GetMap();
         this.addEvents();
     }
@@ -24,15 +26,15 @@ class MapButtons {
 
         const centerX = screenWidth / 2;
         const centerY = screenHeight / 2;
-        
+
         const tileSize = 256;
         const shift = 1 << (this.zoom + 7);
-        
+
         let html = '';
         for (const tile of this.tileList) {
             const top = (tile.row * tileSize + mouse.currentY)  + (centerY - shift);
             const left = (tile.col * tileSize + mouse.currentX) + (centerX - shift);
-            
+
             const isVisible =
                 left + 256 > 0 && left < screenWidth &&
                 top + 256 > 0 && top < screenHeight;
@@ -47,6 +49,17 @@ class MapButtons {
         mapCanvas.innerHTML = html;
     }
     
+    zoomToCenter(newZoom) {
+        const oldShift = 1 << (this.zoom + 7);
+        const newShift = 1 << (newZoom + 7);
+        const scaleFactor = newShift / oldShift;
+        
+        mouse.currentX = mouse.currentX * scaleFactor;
+        mouse.currentY = mouse.currentY * scaleFactor;
+
+        this.zoom = newZoom;
+    }
+
     GetMap(){
         fetch('/Map/GetTiles', {
             method: 'POST',
@@ -63,36 +76,40 @@ class MapButtons {
                 this.renderTiles()
             });
     }
-
+    
     addEvents() {
         document.getElementById("zoomIn").addEventListener("click", () => {
             if (this.zoom !== this.maxZoom) {
-                this.zoom++;
+                const newZoom = this.zoom + 1;
+                
+                this.zoomToCenter(newZoom);
+                this.GetMap();
+
                 const info = `X: ${mouse.currentX}, Y: ${mouse.currentY}, Zoom: ${this.zoom.toFixed(1)}`;
                 debugInfo.textContent = info;
-
-                this.GetMap();
             }
         });
 
         document.getElementById("zoomOut").addEventListener("click", () => {
             if (this.zoom !== this.minZoom) {
-                this.zoom--;
+                const newZoom = this.zoom - 1;
+                
+                this.zoomToCenter(newZoom);
+                this.GetMap();
+
                 const info = `X: ${mouse.currentX}, Y: ${mouse.currentY}, Zoom: ${this.zoom.toFixed(1)}`;
                 debugInfo.textContent = info;
-                
-                this.GetMap();
             }
         });
-        
+
         document.getElementById("resetView").addEventListener("click", () => {
             mouse.currentX = 0;
             mouse.currentY = 0;
             this.zoom = 0;
-            
+
+            this.GetMap();
             const info = `X: ${mouse.currentX}, Y: ${mouse.currentY}, Zoom: ${this.zoom.toFixed(1)}`;
             debugInfo.textContent = info;
-            this.GetMap();
         })
 
         mapViewport.addEventListener("mousedown", (e) => {
@@ -118,8 +135,8 @@ class MapButtons {
             mouse.lastMouseX = e.clientX;
             mouse.lastMouseY = e.clientY;
 
-            const normalizedDeltaX = deltaX / mouse.screen.screenWidth * mouse.factor ;
-            const normalizedDeltaY = deltaY / mouse.screen.screenHeight * mouse.factor ;
+            const normalizedDeltaX = deltaX / mouse.screen.screenWidth * mouseFactor[this.zoom];
+            const normalizedDeltaY = deltaY / mouse.screen.screenHeight * mouseFactor[this.zoom];
 
             mouse.currentX += normalizedDeltaX;
             mouse.currentY += normalizedDeltaY;
