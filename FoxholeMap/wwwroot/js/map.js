@@ -18,10 +18,24 @@ class MapButtons {
     }
 
     renderTiles() {
+        const rect = mapViewport.getBoundingClientRect();
+        const screenWidth = rect.width;
+        const screenHeight = rect.height;
+
+        const centerX = screenWidth / 2;
+        const centerY = screenHeight / 2;
+        
         let html = '';
         for (const tile of this.tileList) {
             const top = tile.row * 256 + mouse.currentY;
             const left = tile.col * 256 + mouse.currentX;
+            
+            const isVisible =
+                left + 256 > 0 && left < screenWidth &&
+                top + 256 > 0 && top < screenHeight;
+
+            if (!isVisible) continue;
+
             const url = `/MapAssets/Sat Tiles/${tile.zoom}/${tile.zoom}_${tile.col}_${tile.row}.png`;
             html += `<img class="map-tile" src="${url}" 
                      style="position:absolute; top:${top}px; left:${left}px; width:256px; height:256px;" />`;
